@@ -1,0 +1,11 @@
+[functions.property-market-analysis]
+verify_jwt = false
+entrypoint = "./functions/property-market-analysis/index.ts"
+
+[functions.import-listing]
+verify_jwt = true
+entrypoint = "./functions/import-listing/index.ts"
+
+[functions.parcel-lookup]
+verify_jwt = false
+entrypoint = "./functions/parcel-lookup/index.ts"

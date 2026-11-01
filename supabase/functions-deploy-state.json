@@ -1,0 +1,17 @@
+{
+  "projectId": "72570196",
+  "functions": {
+    "import-listing": {
+      "hasChanged": false,
+      "hash": "371af4cbca1f73d147e11b283ad842dd8e45d4abf4ad42b3565b7a486bd4cc63"
+    },
+    "property-market-analysis": {
+      "hasChanged": false,
+      "hash": "7cd8f356ffcc2ff5df5197944e6fec13e606ea46bb203c119bdd1faedff549b0"
+    },
+    "parcel-lookup": {
+      "hasChanged": false,
+      "hash": "ff6152634c23091c6d3bfcbe99354e9896cd14de0ad5194a567801d8d598da8b"
+    }
+  }
+}

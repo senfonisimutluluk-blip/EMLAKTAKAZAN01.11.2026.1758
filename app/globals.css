@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { --ink: 247 247 250; --cream: 13 13 19; --sage: 244 63 104; --gold: 255 178 26; }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: #0d0d13; color: rgb(var(--ink)); font-family: var(--font-inter), sans-serif; }
+button, input, select, textarea { font: inherit; }
+::selection { background: #f43f68; color: #ffffff; }
+.display { font-family: var(--font-playfair), serif; }
+@keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.animate-rise { animation: rise .6s ease both; }
