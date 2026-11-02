@@ -13,30 +13,10 @@ export function getProvinces(): Promise<TurkeyLocation[]> {
   return requestLocations('provinces?limit=100');
 }
 
-export async function getDistricts(provinceId: number): Promise<TurkeyLocation[]> {
-  const all: TurkeyLocation[] = [];
-  let page = 1;
-  while (true) {
-    const batch = await requestLocations(`districts?provinceId=${provinceId}&limit=100&page=${page}`);
-    if (!batch.length) break;
-    all.push(...batch);
-    if (batch.length < 100) break;
-    page++;
-    if (page > 20) break;
-  }
-  return all;
+export function getDistricts(provinceId: number): Promise<TurkeyLocation[]> {
+  return requestLocations(`districts?provinceId=${provinceId}&limit=1000`);
 }
 
-export async function getNeighborhoods(districtId: number): Promise<TurkeyLocation[]> {
-  const all: TurkeyLocation[] = [];
-  let page = 1;
-  while (true) {
-    const batch = await requestLocations(`neighborhoods?districtId=${districtId}&limit=100&page=${page}`);
-    if (!batch.length) break;
-    all.push(...batch);
-    if (batch.length < 100) break;
-    page++;
-    if (page > 50) break;
-  }
-  return all;
+export function getNeighborhoods(districtId: number): Promise<TurkeyLocation[]> {
+  return requestLocations(`neighborhoods?districtId=${districtId}&limit=1000`);
 }
