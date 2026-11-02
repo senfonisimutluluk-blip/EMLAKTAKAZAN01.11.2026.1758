@@ -8,11 +8,10 @@ import { updateOwnedListing, type OwnedListingChanges, type OwnedListingDetail }
 import { allPropertyTypeOptions, type PropertyType } from '@/lib/real-estate/property-types';
 import { selectedFeatureTags, specifiedFeatureDetails, featureFieldsFor } from '@/lib/real-estate/property-features';
 import { generateListingDescription } from '@/lib/real-estate/description';
-import { LocationPicker } from '@/components/real-estate/location-picker';
+import { AddressSection } from '@/components/real-estate/address-section';
 import { ListingFeatureFields } from '@/components/real-estate/listing-feature-fields';
 import { ListingSellerFields, emptySellerDetails } from '@/components/real-estate/listing-seller-fields';
 import { ListingImportSection } from '@/components/real-estate/listing-import-section';
-import { ParcelSelector } from '@/components/real-estate/parcel-selector';
 import type { ImportedListingDraft } from '@/lib/real-estate/listing-import';
 import { supabase } from '@/lib/supabase/client';
 
@@ -205,13 +204,21 @@ export function ListingForm({ onClose, editing, onSaved }: { onClose: () => void
               placeholder="Fiyat (TL)" />
           </div>
 
-          <LocationPicker
-            onChange={() => {}}
-            onPartsChange={(parts) => {
+          <AddressSection
+            initialCity={form.city}
+            initialDistrict={form.district}
+            initialNeighborhood={form.neighborhood}
+            onLocationChange={(parts) => {
               update('city', parts.city);
               update('district', parts.district);
               update('neighborhood', parts.neighborhood);
             }}
+            onCoordinatesFound={(lat, lng) => {
+              setLatitude(lat);
+              setLongitude(lng);
+              setShowMap(true);
+            }}
+            title="İlan adresi ve konum"
           />
 
           <div className="grid gap-5 sm:grid-cols-3">
@@ -324,24 +331,6 @@ export function ListingForm({ onClose, editing, onSaved }: { onClose: () => void
               </label>
             )}
           </div>
-
-          <ParcelSelector
-            city={form.city}
-            district={form.district}
-            neighborhood={form.neighborhood}
-            onResult={(result) => {
-              if (result.coordinates) {
-                setLatitude(result.coordinates.lat);
-                setLongitude(result.coordinates.lng);
-                setShowMap(true);
-              }
-            }}
-            onLocationChange={(parts) => {
-              update('city', parts.city);
-              update('district', parts.district);
-              update('neighborhood', parts.neighborhood);
-            }}
-          />
 
           <button type="button" onClick={() => setShowMap(!showMap)}
             className={`flex w-full items-center justify-center gap-2 rounded-xl border py-3 text-sm font-semibold transition ${showMap ? 'border-[#405847] bg-[#405847] text-white' : 'border-black/10 bg-white text-[#405847] dark:border-white/10 dark:bg-white/10'}`}>

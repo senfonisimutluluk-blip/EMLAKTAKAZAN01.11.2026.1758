@@ -4,9 +4,8 @@ import { useState } from 'react';
 import { Bot, ChevronDown, LoaderCircle, Save, Sparkles, TrendingUp } from 'lucide-react';
 import { supabase } from '@/lib/supabase/client';
 import { saveAnalysis } from '@/lib/real-estate/saved-analyses';
-import { LocationPicker } from '@/components/real-estate/location-picker';
+import { AddressSection } from '@/components/real-estate/address-section';
 import { ListingFeatureFields } from '@/components/real-estate/listing-feature-fields';
-import { ParcelSelector } from '@/components/real-estate/parcel-selector';
 import { arsaPropertyTypes, commercialPropertyTypes, GENERAL_COMMERCIAL_TYPE, konutPropertyTypes, type PropertyType } from '@/lib/real-estate/property-types';
 import { selectedFeatureTags, specifiedFeatureDetails } from '@/lib/real-estate/property-features';
 
@@ -118,7 +117,14 @@ export function AiMarketAnalysis() {
         </div>
 
         <div className="relative rounded-3xl border border-white/10 bg-[#0d0d13] p-5 sm:p-6">
-          <LocationPicker onChange={() => undefined} onPartsChange={(parts) => setForm((current) => ({ ...current, ...parts }))} />
+          <AddressSection
+            initialCity={form.city}
+            initialDistrict={form.district}
+            initialNeighborhood={form.neighborhood}
+            onLocationChange={(parts) => setForm((current) => ({ ...current, city: parts.city, district: parts.district, neighborhood: parts.neighborhood }))}
+            title="Analiz adresi ve konum"
+            variant="dark"
+          />
 
           <div className="mt-3 grid gap-3 sm:grid-cols-2">
             <label className="block text-xs font-semibold text-[#aaa9b6]">m²
@@ -131,20 +137,6 @@ export function AiMarketAnalysis() {
               </select>
             </label>
           </div>
-
-          <ParcelSelector
-            city={form.city}
-            district={form.district}
-            neighborhood={form.neighborhood}
-            onResult={(result) => {
-              if (result.coordinates) {
-                setForm((current) => ({ ...current, city: result.city, district: result.district, neighborhood: result.neighborhood ?? current.neighborhood }));
-              }
-            }}
-            onLocationChange={(parts) => {
-              setForm((current) => ({ ...current, city: parts.city, district: parts.district, neighborhood: parts.neighborhood }));
-            }}
-          />
 
           <button type="button" onClick={() => setShowFeatures(!showFeatures)} className="mt-4 flex w-full items-center justify-between rounded-2xl border border-white/10 bg-[#20202c] px-4 py-3 text-left text-sm font-semibold text-[#c8c6d0] transition hover:border-white/25">
             Özellikleri ekle <span className="text-xs font-normal text-[#777687]">isteğe bağlı</span>
