@@ -79,7 +79,8 @@ export function TurkeyMap({
 
   useEffect(() => {
     if (!mapRef.current || !latitude || !longitude) return;
-    mapRef.current.setView([latitude, longitude], 14);
+    mapRef.current.invalidateSize();
+    mapRef.current.setView([latitude, longitude], 16);
     if (markerRef.current) {
       markerRef.current.setLatLng([latitude, longitude]);
     } else {
